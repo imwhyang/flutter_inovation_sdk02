@@ -1,0 +1,70 @@
+buildscript {
+    ext.kotlin_version = '1.6.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+    repositories {
+//        google()
+//        mavenCentral()
+        gradlePluginPortal()
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
+//        maven { url "https://download.flutter.io" }
+        //这里的配置最好只能增加，去掉可能会导致Android的远程库拉不下来
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'https://repo1.maven.org/maven2/' }
+
+        // hms
+        mavenCentral()
+        maven {url 'https://developer.huawei.com/repo/'}
+
+        //====畜脸识别=====
+        maven { url 'https://maven.aliyun.com/repository/public'}
+        maven {
+            credentials {
+                username '668615f4270a4daaf9a49abd'
+                password 'aJofCF2ahNaG'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2099367-release-BQsgkU/'
+        }
+        maven {
+            credentials {
+                username '668615f4270a4daaf9a49abd'
+                password 'aJofCF2ahNaG'
+            }
+            url 'https://packages.aliyun.com/maven/repository/2099367-snapshot-EUD1nV/'
+        }
+        maven { url 'https://maven.aliyun.com/repository/google/' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter/' }
+        maven { url 'https://maven.aliyun.com/repository/central/' }
+//        maven { url 'https://gitee.com/liuchaoya/libcommon/raw/master/repository/' }
+        maven { url 'https://raw.github.com/saki4510t/libcommon/master/repository/' }
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
